@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ShoppingCart, X, Sun, Moon, BookOpen } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingCart, X, Sun, Moon, BookOpen, LogOut, User } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 import './Header.css';
 
 /**
@@ -8,8 +9,11 @@ import './Header.css';
  * - 固定頂部、捲動模糊效果
  * - 桌面版導航連結 + 行動版漢堡選單
  * - Light/Dark 主題切換
+ * - 登入/登出狀態切換
  */
 export default function Header() {
+    const { user, isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [theme, setTheme] = useState('dark');
@@ -19,7 +23,7 @@ export default function Header() {
         document.documentElement.setAttribute('data-theme', 'dark');
     }, []);
 
-    // 監聯捲動
+    // 監聽捲動
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10);
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -35,6 +39,13 @@ export default function Header() {
 
     // 關閉行動選單
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+    // 登出處理
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+        closeMobileMenu();
+    };
 
     const navLinks = [
         { label: '課程總覽', to: '/courses' },
@@ -80,9 +91,30 @@ export default function Header() {
                             <span className="header-cart-badge">0</span>
                         </Link>
 
-                        <Link to="/auth/login" className="btn btn-sm btn-primary">
-                            登入 / 註冊
-                        </Link>
+                        {isAuthenticated ? (
+                            /* 已登入：顯示使用者名稱 + 登出 */
+                            <div className="header-user-area">
+                                <Link to="/dashboard" className="header-user-btn">
+                                    <div className="header-avatar">
+                                        <User size={16} />
+                                    </div>
+                                    <span className="header-user-name">{user.name}</span>
+                                </Link>
+                                <button
+                                    className="header-logout-btn"
+                                    onClick={handleLogout}
+                                    aria-label="登出"
+                                    title="登出"
+                                >
+                                    <LogOut size={18} />
+                                </button>
+                            </div>
+                        ) : (
+                            /* 未登入：登入 / 註冊按鈕 */
+                            <Link to="/auth/login" className="btn btn-sm btn-primary">
+                                登入 / 註冊
+                            </Link>
+                        )}
 
                         {/* 漢堡選單按鈕 */}
                         <button
@@ -123,9 +155,24 @@ export default function Header() {
                 ))}
 
                 <div className="mobile-nav-actions">
-                    <Link to="/auth/login" className="btn btn-md btn-primary" onClick={closeMobileMenu}>
-                        登入 / 註冊
-                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <div className="mobile-nav-user">
+                                <div className="header-avatar">
+                                    <User size={16} />
+                                </div>
+                                <span>{user.name}</span>
+                            </div>
+                            <button className="btn btn-md btn-secondary" onClick={handleLogout}>
+                                <LogOut size={18} />
+                                登出
+                            </button>
+                        </>
+                    ) : (
+                        <Link to="/auth/login" className="btn btn-md btn-primary" onClick={closeMobileMenu}>
+                            登入 / 註冊
+                        </Link>
+                    )}
                 </div>
             </nav>
         </>

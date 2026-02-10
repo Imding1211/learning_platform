@@ -255,6 +255,81 @@
     gap: var(--space-sm);
 }
 
+/* 已登入 — 使用者區域 */
+.header-user-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 4px 4px;
+    border-radius: var(--radius-full);
+    background: var(--bg-alt);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.header-user-btn:hover {
+    background: var(--bg-card);
+}
+
+.header-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-dim);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.header-user-name {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.header-logout-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+/* Mobile — 使用者區域 */
+.mobile-nav-user {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
 /* 響應式 */
 @media (max-width: 1023px) {
     .header-nav {
@@ -276,7 +351,8 @@
         height: var(--header-height-mobile);
     }
 
-    .header-actions .btn {
+    .header-actions .btn,
+    .header-user-area {
         display: none;
     }
 }
