@@ -12,9 +12,14 @@ import './Header.css';
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState('dark');
 
-    // 監聽捲動
+    // 初始化主題
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }, []);
+
+    // 監聯捲動
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10);
         window.addEventListener('scroll', handleScroll, { passive: true });

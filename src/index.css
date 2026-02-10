@@ -56,8 +56,7 @@
   --transition-slow: 300ms ease;
 }
 
-/* Light Theme (預設) */
-:root,
+/* Light Theme */
 [data-theme="light"] {
   /* 品牌色 */
   --primary: #2C918C;
@@ -101,7 +100,8 @@
   --card-backdrop: none;
 }
 
-/* Dark Theme */
+/* Dark Theme (預設) */
+:root,
 [data-theme="dark"] {
   /* 品牌色 */
   --primary: #2C918C;
@@ -189,11 +189,14 @@ button {
   background: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
