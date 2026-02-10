@@ -1,13 +1,409 @@
-body {
+/* ========================================
+   桑尼資料科學 — 全域設計系統
+   ======================================== */
+
+/* ---- Google Fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ========================================
+   1. Design Tokens
+   ======================================== */
+
+/* 共用 Token */
+:root {
+  /* 間距 (8px 網格) */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 80px;
+
+  /* 圓角 */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* 陰影 (Light 主題用) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  /* 字體 */
+  --font-primary: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  --font-secondary: 'Urbanist', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* 斷點 */
+  --bp-mobile: 768px;
+  --bp-tablet: 1024px;
+  --bp-laptop: 1200px;
+
+  /* 容器 */
+  --container-max: 1280px;
+  --container-content: 800px;
+
+  /* Header 高度 */
+  --header-height-desktop: 64px;
+  --header-height-mobile: 56px;
+
+  /* 過渡動畫 */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* Light Theme (預設) */
+:root,
+[data-theme="light"] {
+  /* 品牌色 */
+  --primary: #2C918C;
+  --primary-hover: #237A75;
+  --primary-light: #A5F3FC;
+  --primary-dim: rgba(44, 145, 140, 0.13);
+  --accent: #A855F7;
+
+  /* 背景色 */
+  --bg: #FFFFFF;
+  --bg-alt: #F9FAFB;
+  --bg-card: #FFFFFF;
+  --bg-glass: rgba(0, 0, 0, 0.02);
+
+  /* 文字色 */
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+  --text-highlight: #111827;
+  --text-on-primary: #FFFFFF;
+
+  /* 邊框色 */
+  --border: #E5E7EB;
+  --border-hover: #D1D5DB;
+  --border-accent: rgba(44, 145, 140, 0.3);
+
+  /* 狀態色 */
+  --success: #10B981;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+
+  /* 效果 */
+  --gradient-primary: linear-gradient(135deg, #2C918C 0%, #1A5C59 100%);
+  --gradient-hero: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  --glow-primary: none;
+  --glow-text: none;
+  --card-shadow: var(--shadow-md);
+  --card-shadow-hover: var(--shadow-lg);
+  --card-border: none;
+  --card-backdrop: none;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  /* 品牌色 */
+  --primary: #2C918C;
+  --primary-hover: #237A75;
+  --primary-light: #A5F3FC;
+  --primary-dim: rgba(44, 145, 140, 0.13);
+  --accent: #A855F7;
+
+  /* 背景色 */
+  --bg: #050505;
+  --bg-alt: #0F0F0F;
+  --bg-card: rgba(15, 15, 15, 0.8);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  /* 文字色 */
+  --text-primary: #FFFFFF;
+  --text-secondary: #90A1B9;
+  --text-muted: #62748E;
+  --text-highlight: #CAD5E2;
+  --text-on-primary: #FFFFFF;
+
+  /* 邊框色 */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --border-accent: rgba(44, 145, 140, 0.25);
+
+  /* 狀態色 */
+  --success: #10B981;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+
+  /* Dark 專屬效果 */
+  --gradient-primary: linear-gradient(135deg, #2C918C 0%, #1A5C59 100%);
+  --gradient-hero: linear-gradient(135deg, #050505 0%, #0A1628 50%, #050505 100%);
+  --glow-primary: 0 0 20px rgba(44, 145, 140, 0.3);
+  --glow-text: 0 0 20px rgba(44, 145, 140, 0.5);
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --card-border: 1px solid var(--border);
+  --card-backdrop: blur(12px);
+}
+
+/* ========================================
+   2. 全域 Reset
+   ======================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg);
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ========================================
+   3. 共用工具樣式
+   ======================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.section {
+  padding: var(--space-3xl) 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.section-title {
+  font-family: var(--font-primary);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---- 按鈕 ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-lg {
+  height: 56px;
+  font-size: 18px;
+  padding: 0 32px;
+}
+
+.btn-md {
+  height: 48px;
+  font-size: 16px;
+  padding: 0 24px;
+}
+
+.btn-sm {
+  height: 40px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--glow-primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  filter: brightness(0.9);
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  padding: 0;
+  height: auto;
+}
+
+.btn-ghost:hover {
+  opacity: 0.8;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ---- 卡片 ---- */
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: var(--card-backdrop);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-4px);
+}
+
+[data-theme="dark"] .card:hover {
+  border-color: var(--border-hover);
+}
+
+/* ========================================
+   4. 動畫
+   ======================================== */
+
+/* 滾動進場動畫 */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========================================
+   5. 響應式
+   ======================================== */
+
+@media (max-width: 1023px) {
+  .section-title {
+    font-size: 32px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 28px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
+  }
+
+  .btn-lg {
+    width: 100%;
+  }
 }
