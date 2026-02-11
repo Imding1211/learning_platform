@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
     Search, SlidersHorizontal, Star, ArrowRight,
     ChevronLeft, ChevronRight, SearchX, X,
@@ -125,7 +125,8 @@ function CourseCard({ course }) {
 
 /* ─── 主頁面 ─── */
 export default function CoursesPage() {
-    const [search, setSearch] = useState('');
+    const [searchParams] = useSearchParams();
+    const [search, setSearch] = useState(searchParams.get('q') || '');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedLevel, setSelectedLevel] = useState('');
     const [priceFilter, setPriceFilter] = useState('all');

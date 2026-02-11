@@ -16,12 +16,14 @@ export default function Header() {
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem('theme') || 'dark';
+    });
 
-    // 初始化主題
+    // 初始化主題（從 localStorage 讀取）
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }, []);
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     // 監聽捲動
     useEffect(() => {
@@ -34,7 +36,7 @@ export default function Header() {
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
     };
 
     // 關閉行動選單
