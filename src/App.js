@@ -6,6 +6,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 import CoursesPage from './pages/courses/CoursesPage';
 import CourseDetailPage from './pages/courses/CourseDetailPage';
 import ConsultPage from './pages/consult/ConsultPage';
+import ResourcesPage from './pages/resources/ResourcesPage';
 import './App.css';
 
 /**
@@ -23,6 +24,7 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route path="/consult" element={<ConsultPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
